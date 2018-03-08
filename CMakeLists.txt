@@ -26,6 +26,12 @@ option(LIBIGL_WITH_XML              "Use XML"            OFF)
 find_package(LIBIGL REQUIRED QUIET)
 
 # Add your project files
-file(GLOB SRCFILES *.cpp)
+
+if (TRAVISCI_BUILD)
+    FILE(GLOB SOURCES src/*.cpp src_travisci/*.cpp)
+else (TRAVISCI_BUILD)
+    FILE(GLOB SOURCES src/*.cpp)
+endif (TRAVISCI_BUILD)
+
 add_executable(${PROJECT_NAME}_bin ${SRCFILES})
-target_link_libraries(${PROJECT_NAME}_bin igl::core igl::opengl_glfw)
+target_link_libraries(${PROJECT_NAME}_bin igl::core igl::viewer)

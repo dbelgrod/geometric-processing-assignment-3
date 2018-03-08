@@ -1,4 +1,4 @@
-#include <igl/opengl/glfw/Viewer.h>
+#include <igl/viewer/Viewer.h>
 
 int main(int argc, char *argv[])
 {
@@ -27,8 +27,8 @@ int main(int argc, char *argv[])
     2,8,4).finished().array()-1;
 
   // Plot the mesh
-  igl::opengl::glfw::Viewer viewer;
-  viewer.data().set_mesh(V, F);
-  viewer.data().set_face_based(true);
+  igl::Viewer viewer;
+  viewer.data.set_mesh(V, F);
+  viewer.data.set_face_based(true);
   viewer.launch();
 }
