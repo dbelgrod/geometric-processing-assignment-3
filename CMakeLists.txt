@@ -1,5 +1,17 @@
 cmake_minimum_required(VERSION 3.1)
-project(example)
+project(ex3)
+
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+
+include(DownloadProject)
+download_project(
+    PROJ         libigl
+    SOURCE_DIR   ${CMAKE_CURRENT_SOURCE_DIR}/external/libigl
+    DOWNLOAD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/.cache/libigl
+    GIT_REPOSITORY https://github.com/libigl/libigl.git
+    GIT_TAG        e699d257fe860d4fd82709835e72438bd0cd1533
+)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
@@ -27,11 +39,8 @@ find_package(LIBIGL REQUIRED QUIET)
 
 # Add your project files
 
-if (TRAVISCI_BUILD)
-    FILE(GLOB SOURCES src/*.cpp src_travisci/*.cpp)
-else (TRAVISCI_BUILD)
-    FILE(GLOB SOURCES src/*.cpp)
-endif (TRAVISCI_BUILD)
+
+FILE(GLOB SRCFILES src/*.cpp)
 
 add_executable(${PROJECT_NAME}_bin ${SRCFILES})
-target_link_libraries(${PROJECT_NAME}_bin igl::core igl::viewer)
+target_link_libraries(${PROJECT_NAME}_bin igl::core igl::opengl igl::opengl_glfw)
